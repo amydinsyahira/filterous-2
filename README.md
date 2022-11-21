@@ -1,6 +1,6 @@
 
 
-![filterous-2](images/filterous-2.png)
+![filterous-2](https://raw.githubusercontent.com/amydinsyahira/filterous-2/master/images/filterous-2.png)
 
 # Filterous 2
 
@@ -52,6 +52,30 @@ filterous.importImage(buffer)
   .save(filename);
 ```
 
+Import an image url to `filterous` then `save` to the disk.
+
+```javascript
+const filterous = require('filterous');
+
+(async () => {
+  let f = await filterous.importImage(imageUrl, options);
+  f.applyFilter(filter, value);
+  f.save(filename);
+})()
+```
+
+also:
+
+```javascript
+const filterous = require('filterous');
+
+(async () => {
+  let f = await filterous.importImage(imageUrl);
+  f.applyInstaFilter(filterName, options);
+  f.save(filename);
+})()
+```
+
 The `applyFilter()` can be used with other filters and the results are accumulative, while 
 the predefined `applyInstaFilter()` overwrite the previous filter result. 
 However you can use `applyFilter()` to adjust the colors after `applyInstaFilter()` is applied.
@@ -81,6 +105,17 @@ fs.readFile('input/leia.jpg', (err, buffer) => {
 });
 ```
 
+with an image url:
+
+```javascript
+(async () => {
+  let f = await filterous.importImage('https://raw.githubusercontent.com/amydinsyahira/filterous-2/master/demo-node/images/leia.jpg');
+  f.applyFilter('brightness', 0.2);
+  f.applyFilter('colorFilter', [255, 255, 0, 0.05]);
+  f.save('output/leia.jpg');
+})()
+```
+
 Example with predefined Instagram-like effects:
 
 ```javascript
@@ -89,7 +124,16 @@ fs.readFile('input/leia.jpg', (err, buffer) => {
     .applyInstaFilter('amaro')
     .save('output/leia.jpg');
 });
+```
 
+with an image url:
+
+```javascript
+(async () => {
+  let f = await filterous.importImage('https://raw.githubusercontent.com/amydinsyahira/filterous-2/master/demo-node/images/leia.jpg', {scale: 0.5, format: 'png'});
+  f.applyInstaFilter('amaro');
+  f.save('output/leia.jpg');
+})()
 ```
 
 ### Basic Usage for JavaScript on Browser
